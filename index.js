@@ -16,7 +16,7 @@ let isReady = false;
 // ------------------
 const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: 'bot2', // Change to bot2, bot3 for multiple numbers
+        clientId: 'bot1', // Change to bot2, bot3 for multiple numbers
         dataPath: '/mnt/data/.wwebjs_auth' // Persistent disk for Render
     }),
     puppeteer: {
@@ -53,12 +53,19 @@ client.on('disconnected', reason => {
 });
 
 // ------------------
-// Message handler
+// Message handler: reactive auto-reply
 // ------------------
-client.on('message', msg => {
+client.on('message', async msg => {
     console.log(`📩 Message received from ${msg.from}: ${msg.body}`);
-    if (msg.body.toLowerCase() === 'hi') {
-        msg.reply('Hello! 👋 Welcome to IBETIN.');
+
+    // Auto-reply text
+    const replyMessage = 'Hello! 👋 Thanks for messaging IBETIN. We will get back to you shortly.';
+
+    try {
+        await msg.reply(replyMessage);
+        console.log(`✅ Auto-reply sent to ${msg.from}`);
+    } catch (err) {
+        console.error(`❌ Failed to send auto-reply to ${msg.from}:`, err);
     }
 });
 
