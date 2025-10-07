@@ -16,7 +16,7 @@ let isReady = false;
 // ------------------
 const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: 'bot1', // Change to bot2, bot3 for multiple numbers
+        clientId: 'bot2', // Change to bot2, bot3 for multiple numbers
         dataPath: '/mnt/data/.wwebjs_auth' // Persistent disk for Render
     }),
     puppeteer: {
@@ -103,5 +103,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌐 Server running on port ${PORT}`);
 });
+
 
 
