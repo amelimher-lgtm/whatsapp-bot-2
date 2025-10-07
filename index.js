@@ -2,7 +2,6 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode');
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -68,17 +67,23 @@ client.on('disconnected', reason => {
 });
 
 // ------------------
-// Message handler: auto-reply only to new numbers
+// Message handler: auto-reply only to new private numbers
 // ------------------
 client.on('message', async msg => {
     const sender = msg.from;
+
+    // Ignore messages from groups
+    if (sender.endsWith('@g.us')) {
+        console.log(`ℹ️ Message from a group ${sender}, ignoring.`);
+        return;
+    }
 
     // Check if sender is already replied
     if (!repliedNumbers.includes(sender)) {
         const replyMessage = 'Hello! 👋 Thanks for messaging IBETIN. We will get back to you shortly.';
         try {
             await msg.reply(replyMessage);
-            console.log(`✅ Auto-reply sent to new number: ${sender}`);
+            console.log(`✅ Auto-reply sent to new private number: ${sender}`);
 
             // Save this number to memory & file
             repliedNumbers.push(sender);
