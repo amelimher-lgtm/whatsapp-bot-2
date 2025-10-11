@@ -4,8 +4,8 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-const DATA_FILE = '/mnt/data/repliedNumbers.json'; // Persistent file
+const PORT = process.env.PORT || 3002;
+const DATA_FILE = '/mnt/data/repliedNumbers_bot2.json'; // Persistent file
 
 // ------------------
 // Track bot status
@@ -130,5 +130,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌐 Server running on port ${PORT}`);
 });
+
 
 
